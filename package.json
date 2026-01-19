@@ -1,0 +1,19 @@
+{
+  "name": "claude-agent-examples",
+  "version": "1.0.0",
+  "description": "Examples exploring Claude Agent SDK concepts",
+  "type": "module",
+  "scripts": {
+    "basic": "npx tsx examples/01-basic-agent/index.ts",
+    "subagents": "npx tsx examples/02-subagents/index.ts",
+    "custom-tools": "npx tsx examples/03-custom-tools/index.ts",
+    "hooks": "npx tsx examples/04-hooks/index.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.1.3"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
