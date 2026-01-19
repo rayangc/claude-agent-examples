@@ -92,28 +92,37 @@ A code metrics server with three tools:
 
 ---
 
-### 4. Hooks ⏳ UP NEXT
+### 4. Hooks ✅ COMPLETED
 
 **Folder**: `examples/04-hooks/`
 
-**Concepts to Cover**:
-- [ ] What are hooks and the lifecycle they intercept
-- [ ] `PreToolUse` hooks - run before a tool executes
-- [ ] `PostToolUse` hooks - run after a tool executes
-- [ ] Hook matchers - targeting specific tools
-- [ ] Use cases: logging, permission enforcement, command blocking
-- [ ] Modifying or blocking tool calls
-- [ ] Audit trails and compliance
+**Concepts Covered**:
+- [x] What are hooks and the lifecycle they intercept
+- [x] `PreToolUse` hooks - run before a tool executes
+- [x] `PostToolUse` hooks - run after a tool executes
+- [x] `SessionStart`, `SessionEnd`, and `Stop` hooks
+- [x] Hook matchers - targeting specific tools with regex
+- [x] Use cases: logging, permission enforcement, command blocking
+- [x] Blocking tool calls with `permissionDecision: "deny"`
+- [x] Audit trails with timing via `toolUseId` correlation
+- [x] Hooks with subagents (don't inherit, must share explicitly)
 
-**Planned Example**:
-A security-focused agent with hooks that:
-- Logs all tool usage to an audit trail
-- Blocks dangerous bash commands (rm -rf, etc.)
-- Requires confirmation for file writes
+**Files Created**:
+- `index.ts` - Security-focused agent with audit and blocking hooks
+- `learnings.md` - Comprehensive guide to hooks
+
+**Example Implementation**:
+A security-focused agent that:
+- Logs all tool usage to an audit trail with timestamps
+- Blocks dangerous bash commands (rm -rf, chmod 777, curl|sh, etc.)
+- Uses matchers to apply file-specific hooks to Write/Edit only
+- Tracks execution timing via Pre/Post hook correlation
+
+**Run Results**: 5 turns, $0.12 cost, 1 dangerous command blocked
 
 ---
 
-### 5. Structured Output 📋 PLANNED
+### 5. Structured Output ⏳ UP NEXT
 
 **Folder**: `examples/05-structured-output/`
 
@@ -156,10 +165,10 @@ claude-agent-examples/
 │   ├── 03-custom-tools/         ✅ COMPLETED
 │   │   ├── index.ts
 │   │   └── learnings.md
-│   ├── 04-hooks/                ⏳ UP NEXT
+│   ├── 04-hooks/                ✅ COMPLETED
 │   │   ├── index.ts
 │   │   └── learnings.md
-│   └── 05-structured-output/    📋 PLANNED
+│   └── 05-structured-output/    ⏳ UP NEXT
 │       ├── index.ts
 │       └── learnings.md
 ```
@@ -205,3 +214,7 @@ If the conversation context is lost, use this file to:
 - Tool naming convention: `mcp__<server-name>__<tool-name>`
 - Zod `.describe()` is crucial for Claude to understand parameter purposes
 - Tool calls remain sequential even for independent custom tools
+- Hooks don't inherit from parent to subagent - must explicitly configure on each agent
+- `toolUseId` parameter correlates PreToolUse/PostToolUse pairs for the same operation
+- Matchers are regex patterns (e.g., `"Write|Edit"` matches both Write and Edit tools)
+- Stop hook fires per-response, SessionEnd fires once when session terminates
