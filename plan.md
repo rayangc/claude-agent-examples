@@ -66,27 +66,33 @@ A code review system where the main agent delegates to:
 
 ---
 
-### 3. Custom Tools (MCP) ⏳ UP NEXT
+### 3. Custom Tools (MCP) ✅ COMPLETED
 
 **Folder**: `examples/03-custom-tools/`
 
-**Concepts to Cover**:
-- [ ] What is MCP (Model Context Protocol)
-- [ ] Creating custom tools with `createSdkMcpServer`
-- [ ] Tool definition: name, description, parameters (using Zod)
-- [ ] Tool implementation: the async handler function
-- [ ] Registering custom tools with the agent
-- [ ] Combining built-in tools with custom tools
+**Concepts Covered**:
+- [x] What is MCP (Model Context Protocol)
+- [x] Creating custom tools with `createSdkMcpServer`
+- [x] Tool definition: name, description, parameters (using Zod)
+- [x] Tool implementation: the async handler function
+- [x] Registering custom tools with the agent
+- [x] Combining built-in tools with custom tools
 
-**Planned Example**:
-A code metrics tool that:
-- Calculates cyclomatic complexity
-- Counts lines of code
-- Analyzes dependencies
+**Files Created**:
+- `index.ts` - MCP server with 3 code metrics tools (count_lines, analyze_complexity, find_dependencies)
+- `learnings.md` - Comprehensive guide to custom tools and MCP
+
+**Example Implementation**:
+A code metrics server with three tools:
+- `count_lines` - Total, code, comment, and blank line counts
+- `analyze_complexity` - Cyclomatic complexity with breakdown
+- `find_dependencies` - ES6 imports and CommonJS requires
+
+**Run Results**: 7 turns, $0.13 cost, comprehensive code analysis with tables and recommendations
 
 ---
 
-### 4. Hooks 📋 PLANNED
+### 4. Hooks ⏳ UP NEXT
 
 **Folder**: `examples/04-hooks/`
 
@@ -101,9 +107,9 @@ A code metrics tool that:
 
 **Planned Example**:
 A security-focused agent with hooks that:
-- Log all tool usage
-- Block dangerous bash commands (rm -rf, etc.)
-- Require confirmation for file writes
+- Logs all tool usage to an audit trail
+- Blocks dangerous bash commands (rm -rf, etc.)
+- Requires confirmation for file writes
 
 ---
 
@@ -147,10 +153,10 @@ claude-agent-examples/
 │   ├── 02-subagents/            ✅ COMPLETED
 │   │   ├── index.ts
 │   │   └── learnings.md
-│   ├── 03-custom-tools/         ⏳ UP NEXT
+│   ├── 03-custom-tools/         ✅ COMPLETED
 │   │   ├── index.ts
 │   │   └── learnings.md
-│   ├── 04-hooks/                📋 PLANNED
+│   ├── 04-hooks/                ⏳ UP NEXT
 │   │   ├── index.ts
 │   │   └── learnings.md
 │   └── 05-structured-output/    📋 PLANNED
@@ -195,3 +201,7 @@ If the conversation context is lost, use this file to:
 - Subagent `tools` property also doesn't appear to strictly restrict tool access (similar to `allowedTools`)
 - Subagent delegation via Task tool appears to be sequential, not truly parallel
 - Cost optimization with different models per subagent works well ($0.52 for comprehensive code review)
+- Custom MCP tools integrate seamlessly with built-in tools (Claude naturally mixes them)
+- Tool naming convention: `mcp__<server-name>__<tool-name>`
+- Zod `.describe()` is crucial for Claude to understand parameter purposes
+- Tool calls remain sequential even for independent custom tools
