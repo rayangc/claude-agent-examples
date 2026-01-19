@@ -7,7 +7,8 @@
     "basic": "npx tsx examples/01-basic-agent/index.ts",
     "subagents": "npx tsx examples/02-subagents/index.ts",
     "custom-tools": "npx tsx examples/03-custom-tools/index.ts",
-    "hooks": "npx tsx examples/04-hooks/index.ts"
+    "hooks": "npx tsx examples/04-hooks/index.ts",
+    "structured-output": "npx tsx examples/05-structured-output/index.ts"
   },
   "dependencies": {
     "@anthropic-ai/claude-agent-sdk": "^0.1.3",

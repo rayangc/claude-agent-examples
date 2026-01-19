@@ -122,28 +122,28 @@ A security-focused agent that:
 
 ---
 
-### 5. Structured Output ⏳ UP NEXT
+### 5. Structured Output ✅ COMPLETED
 
 **Folder**: `examples/05-structured-output/`
 
-**Concepts to Cover**:
-- [ ] Why structured output matters for programmatic use
-- [ ] JSON Schema definition for responses
-- [ ] Validating agent responses
-- [ ] Type-safe responses in TypeScript
-- [ ] Error handling for invalid responses
+**Concepts Covered**:
+- [x] Why structured output matters for programmatic use
+- [x] JSON Schema definition for responses (`outputFormat` config)
+- [x] Type-safe responses in TypeScript (interface mirrors schema)
+- [x] Accessing results via `message.structured_output`
+- [x] StructuredOutput tool discovery (SDK creates a tool Claude calls)
+- [x] Handling irrelevant context (applicable field, discriminated unions)
+- [x] Permissions vs Hooks (different systems, different layers)
+- [x] Interactive hooks (async approval flows, Discord/Slack integration patterns)
+- [x] Background subagents (`run_in_background`, output files, polling)
+- [x] Agent collaboration patterns (natural language, convention-based, file-based)
+- [x] When to use vs avoid structured output
 
-**Planned Example**:
-A code review agent that returns structured JSON:
-```typescript
-{
-  issues: [
-    { severity: "high", category: "security", file: "...", description: "..." }
-  ],
-  overallScore: 85,
-  summary: "..."
-}
-```
+**Files Created**:
+- `index.ts` - Code review agent with JSON schema output
+- `learnings.md` - Comprehensive guide including hooks, permissions, and collaboration patterns
+
+**Run Results**: 2 turns, $0.15 cost, 12 issues found, CI/CD integration demo
 
 ---
 
@@ -168,7 +168,7 @@ claude-agent-examples/
 │   ├── 04-hooks/                ✅ COMPLETED
 │   │   ├── index.ts
 │   │   └── learnings.md
-│   └── 05-structured-output/    ⏳ UP NEXT
+│   └── 05-structured-output/    ✅ COMPLETED
 │       ├── index.ts
 │       └── learnings.md
 ```
@@ -182,10 +182,11 @@ claude-agent-examples/
 npm install
 
 # Run each example
-npm run basic        # 01-basic-agent
-npm run subagents    # 02-subagents
-npm run custom-tools # 03-custom-tools
-npm run hooks        # 04-hooks
+npm run basic             # 01-basic-agent
+npm run subagents         # 02-subagents
+npm run custom-tools      # 03-custom-tools
+npm run hooks             # 04-hooks
+npm run structured-output # 05-structured-output
 ```
 
 ---
@@ -218,3 +219,12 @@ If the conversation context is lost, use this file to:
 - `toolUseId` parameter correlates PreToolUse/PostToolUse pairs for the same operation
 - Matchers are regex patterns (e.g., `"Write|Edit"` matches both Write and Edit tools)
 - Stop hook fires per-response, SessionEnd fires once when session terminates
+- `StructuredOutput` is a tool the SDK creates - Claude calls it to format responses to match the schema
+- Permissions (built-in CLI safety) and Hooks (custom SDK callbacks) are different systems at different layers
+- Hooks run BEFORE permissions check: Tool Call → PreToolUse Hooks → Permission System → Execute
+- Hooks are async - can implement Discord/Slack approval flows, webhooks, terminal prompts
+- Background subagents: `run_in_background: true` returns task_id + output_file for polling
+- Output files only contain explicit `console.log` - SDK doesn't auto-log thinking/tool calls
+- Agent collaboration patterns: natural language, convention-based, file-based, hybrid
+- File-based communication: ~2-10ms I/O overhead (negligible vs API calls), enables clean contract-based decoupling
+- Structured output best practice: start unstructured, add structure when you hit parsing pain
