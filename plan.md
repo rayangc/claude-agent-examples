@@ -39,28 +39,34 @@ Learn the Claude Agent SDK by building focused examples that explore each core c
 
 ---
 
-### 2. Subagents ⏳ UP NEXT
+### 2. Subagents ✅ COMPLETED
 
 **Folder**: `examples/02-subagents/`
 
-**Concepts to Cover**:
-- [ ] What are subagents and why use them
-- [ ] Defining subagents with specialized roles
-- [ ] The `agents` configuration option
-- [ ] How the main agent delegates to subagents
-- [ ] Subagent-specific tools and model selection
-- [ ] Communication between main agent and subagents
-- [ ] Use cases: security reviewer, docs writer, test runner, etc.
+**Concepts Covered**:
+- [x] What are subagents and why use them
+- [x] Defining subagents with specialized roles
+- [x] The `agents` configuration option
+- [x] How the main agent delegates to subagents
+- [x] Subagent-specific tools and model selection
+- [x] Communication between main agent and subagents
+- [x] Use cases: security reviewer, docs writer, test runner, etc.
 
-**Planned Example**:
+**Files Created**:
+- `index.ts` - Code review system with 3 specialized subagents
+- `learnings.md` - Comprehensive guide to subagents with run observations
+
+**Example Implementation**:
 A code review system where the main agent delegates to:
-- Security specialist subagent
-- Performance analyst subagent
-- Documentation checker subagent
+- Security specialist subagent (sonnet - finds vulnerabilities)
+- Performance analyst subagent (haiku - spots inefficiencies)
+- Documentation checker subagent (haiku - evaluates docs)
+
+**Run Results**: 38 turns, $0.52 cost, comprehensive code review produced
 
 ---
 
-### 3. Custom Tools (MCP) 📋 PLANNED
+### 3. Custom Tools (MCP) ⏳ UP NEXT
 
 **Folder**: `examples/03-custom-tools/`
 
@@ -138,10 +144,10 @@ claude-agent-examples/
 │   │   ├── index.ts
 │   │   ├── max-turns-demo.ts
 │   │   └── learnings.md
-│   ├── 02-subagents/            ⏳ UP NEXT
+│   ├── 02-subagents/            ✅ COMPLETED
 │   │   ├── index.ts
 │   │   └── learnings.md
-│   ├── 03-custom-tools/         📋 PLANNED
+│   ├── 03-custom-tools/         ⏳ UP NEXT
 │   │   ├── index.ts
 │   │   └── learnings.md
 │   ├── 04-hooks/                📋 PLANNED
@@ -186,3 +192,6 @@ If the conversation context is lost, use this file to:
 
 - The `allowedTools` option doesn't seem to strictly restrict tools in the current SDK version
 - `message.subtype` for maxTurns is `"error_max_turns"` (not just `"maxTurns"`)
+- Subagent `tools` property also doesn't appear to strictly restrict tool access (similar to `allowedTools`)
+- Subagent delegation via Task tool appears to be sequential, not truly parallel
+- Cost optimization with different models per subagent works well ($0.52 for comprehensive code review)
